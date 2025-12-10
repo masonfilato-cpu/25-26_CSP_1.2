@@ -1,12 +1,18 @@
 #-----import statements-----
 import turtle as trtl
 import random as rand
-
+import turtle as Timer
+import turtle as wn
+import random as Random_Color
 #-----game configuration----
-spot_color = "purple"
+spot_color = ["red", "blue", "green", "orange", "purple", "gold"]
 score = 0
+sizes = [1,2,3,4,5,6]
 font_setup = ("Arial", 20, "normal")
-
+new_color = Random_Color.choice(spot_color)
+timer = 30
+counter_interval = 1000   #1000 represents 1 second
+timer_up = False
 #-----initialize turtle-----
 score_writer = trtl.Turtle()
 score_writer.penup()
@@ -14,13 +20,22 @@ box_turtle = trtl.Turtle()
 box_turtle.speed(0)
 score_writer.speed(0)
 
+Timer.hideturtle()
+
+wn.bgcolor("orange")
 
 meowl = trtl.Turtle()
 meowl.shape("circle")
-meowl.color(spot_color)
+rand.choice(spot_color)
+
 meowl.shapesize(3)
 meowl.penup()
 meowl.speed(0)
+
+counter =  Timer.Turtle()
+counter.hideturtle()
+box_turtle.hideturtle()
+score_writer.hideturtle()
 #-----game functions--------
 # Draw the box for the score
 def scoreBox():
@@ -40,9 +55,16 @@ def scoreBox():
     score_writer.penup()
     score_writer.goto(300, 332)
 
+
 # Get a score boost, move the turtle randomly
 def spot_clicked(x, y):
-    change_position()
+    global timer_up
+    if timer_up == False:
+        change_position()
+        meowl.color(str(new_color))
+        change_size_randomly(meowl, sizes)
+    else:
+        meowl.hideturtle()
 
 def change_position():
     # Move the turtle to a random location
@@ -60,10 +82,26 @@ def update_score():
     score_writer.clear()
     # print the score
     score_writer.write(score, font=font_setup)
+#Start countdown and update
+def countdown():
+  global timer, timer_up
+  counter.clear()
+  if timer <= 0:
+    counter.write("Time's Up", font=font_setup)
+    timer_up = True
+  else:
+    counter.write("Timer: " + str(timer), font=font_setup)
+    timer -= 1
+    counter.getscreen().ontimer(countdown, counter_interval)
 
+def change_size_randomly(turtle_instance, size_list):
+    new_size = rand.choice(size_list)
+    turtle_instance.shapesize(new_size)
 #-----events----------------
 meowl.onclick(spot_clicked)
 
 scoreBox()
 wn = trtl.Screen()
+
+wn.ontimer(countdown, counter_interval)
 wn.mainloop()
