@@ -12,7 +12,7 @@ score = 0
 sizes = [1,2,3,4,5,6]
 font_setup = ("Arial", 20, "normal")
 new_color = Random_Color.choice(spot_color)
-timer = 30
+timer = 5
 counter_interval = 1000   #1000 represents 1 second
 timer_up = False
 #-----initialize turtle-----
