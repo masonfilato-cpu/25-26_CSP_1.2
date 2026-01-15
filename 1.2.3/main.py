@@ -58,7 +58,7 @@ def draw_letter(letter, active_apple):
   active_apple.color("black")
   remember_position = active_apple.position()
   active_apple.setpos(active_apple.xcor() + apple_letter_x_offset,active_apple.ycor() + apple_letter_y_offset)
-  active_apple.write(letter, font=("Arial", 74, "bold"))
+  active_apple.write(letter, font=("Arial", 60, "bold"))
   active_apple.setpos(remember_position)
 
 def check_apple_a():
